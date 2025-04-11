@@ -39,9 +39,16 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
         Long idPostazione = null;
         boolean continua = true;
         System.out.println("GestionePrenotazioniRunner partito");
-        System.out.println("inserisci il tuo username");
-        username = scanner.nextLine();
-        Utente utente = utenteService.findByUsername(username);
+        Utente utente = null;
+        do {
+            System.out.println("inserisci il tuo username");
+            try {
+                username = scanner.nextLine();
+                utente = utenteService.findByUsername(username);
+            } catch (IllegalArgumentException e) {
+                log.error(e.getMessage());
+            }
+        } while (utente == null);
         //gestire creazione nuovo utente
         while (continua){
             System.out.println("Seleziona l'operazione da effettuare");
@@ -159,8 +166,13 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
                     break;
                 case 4:
                     System.out.println("inserisci il tuo username");
-                    username = scanner.nextLine();
-                    utente = utenteService.findByUsername(username);
+                    try {
+                        username = scanner.nextLine();
+                        utente = utenteService.findByUsername(username);
+                    } catch (IllegalArgumentException e) {
+                        log.error(e.getMessage());
+                        System.out.println("proseguirai con lo stesso utente inserito in precedenza");
+                    }
                     break;
                     case 5:
                         System.out.println("Lista prenotazioni: ");
