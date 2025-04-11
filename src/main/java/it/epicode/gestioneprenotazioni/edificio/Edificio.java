@@ -30,6 +30,6 @@ public String toString() {
             ", nome= " + nome +
             ", indirizzo= " + indirizzo +
             ", città= " + citta +
-            "}";
+            "]";
 }
 }

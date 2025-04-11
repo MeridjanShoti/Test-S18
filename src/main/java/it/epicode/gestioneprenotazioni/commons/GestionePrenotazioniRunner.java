@@ -1,5 +1,6 @@
 package it.epicode.gestioneprenotazioni.commons;
 
+import it.epicode.gestioneprenotazioni.edificio.EdificioService;
 import it.epicode.gestioneprenotazioni.postazione.Postazione;
 import it.epicode.gestioneprenotazioni.postazione.PostazioneService;
 import it.epicode.gestioneprenotazioni.postazione.TipoPostazione;
@@ -25,6 +26,8 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
     private PostazioneService postazioneService;
     @Autowired
     private PrenotazioneService prenotazioneService;
+    @Autowired
+    private EdificioService edificioService;
     @Override
     public void run(String... args) throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -160,8 +163,21 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
                     utente = utenteService.findByUsername(username);
                     break;
                     case 5:
-                        System.out.println("Lista prenotazioni");
+                        System.out.println("Lista prenotazioni: ");
                         prenotazioneService.printPrenotazioni(prenotazioneService.findAll());
+                        break;
+                        case 6:
+                            System.out.println("Lista edifici: ");
+                            edificioService.printEdifici(edificioService.findAllEdifici());
+                            break;
+                case 7:
+                    System.out.println("Lista utenti: ");
+                    utenteService.printUtenti(utenteService.findAllUtenti());
+                    break;
+                case 8:
+                    System.out.println("Lista postazioni: ");
+                    postazioneService.printPostazioni(postazioneService.findAllPostazioni());
+                    break;
                 case 0:
                     continua = false;
                     break;

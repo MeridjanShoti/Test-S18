@@ -28,8 +28,8 @@ public class Utente {
     @Override
     public String toString() {
         return "[id= " + id +
-                ", \nusername= " + username +
-                ", \nnomeCompleto= " + nomeCompleto +
+                ", username= " + username +
+                ", nomeCompleto= " + nomeCompleto +
                 ", email= " + email +
                 "]";
     }

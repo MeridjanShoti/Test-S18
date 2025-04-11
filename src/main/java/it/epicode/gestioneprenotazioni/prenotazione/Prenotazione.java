@@ -29,9 +29,9 @@ public class Prenotazione {
     @Override
     public String toString() {
         return "[id=" + id +
-                ", \ndataPrenotazione= " + dataPrenotazione +
-                ", \nutente= " + utente.getNomeCompleto() +
-                ", \npostazione= " + postazione.getId() +
+                ", dataPrenotazione= " + dataPrenotazione +
+                ", utente= " + utente.getNomeCompleto() +
+                ", postazione= " + postazione.getId() +
                 "]";
     }
 }

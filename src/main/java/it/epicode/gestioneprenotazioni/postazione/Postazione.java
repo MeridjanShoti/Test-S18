@@ -30,10 +30,10 @@ public class Postazione {
     @Override
     public String toString() {
         return "[id= " + id +
-                ", \ndescrizione= " + descrizione  +
-                ", \ntipo= " + tipo +
-                ", \nnumeroMassimoOccupanti= " + numeroMassimoOccupanti +
-                ", \nedificio= " + edificio.getNome() +
+                ", descrizione= " + descrizione  +
+                ", tipo= " + tipo +
+                ", numeroMassimoOccupanti= " + numeroMassimoOccupanti +
+                ", edificio= " + edificio.getNome() +
                 "]";
     }
 }
