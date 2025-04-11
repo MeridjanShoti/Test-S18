@@ -3,6 +3,9 @@ package it.epicode.gestioneprenotazioni.utente;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UtenteRepository extends JpaRepository<Utente, Long> {
+import java.util.Optional;
 
+public interface UtenteRepository extends JpaRepository<Utente, Long> {
+Optional<Utente> findByUsername(String username);
+Optional<Utente> findByEmail(String email);
 }
