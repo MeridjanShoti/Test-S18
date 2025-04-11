@@ -71,7 +71,7 @@ public class CreazioneRunner implements CommandLineRunner {
         utente1.setEmail("mariorossi@gmail.com");
         utenteService.createUtente(utente1);
         Utente utente2 = new Utente();
-        utente2.setUsername("lucaRattoDeFogna");
+        utente2.setUsername("lucaRDF");
         utente2.setNomeCompleto("Luca Agostini");
         utente2.setEmail("lucaAgostini@gmail.com");
         utenteService.createUtente(utente2);

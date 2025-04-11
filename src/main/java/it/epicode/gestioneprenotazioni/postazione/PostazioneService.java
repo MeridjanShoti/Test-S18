@@ -3,6 +3,8 @@ package it.epicode.gestioneprenotazioni.postazione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostazioneService {
     @Autowired
@@ -12,5 +14,14 @@ public class PostazioneService {
             throw new IllegalArgumentException("Postazione non valida");
         }
         return postazioneRepository.save(postazione);
+    }
+    public List<Postazione> findAllPostazioni(){
+        return postazioneRepository.findAll();
+    }
+    public List<Postazione> findByCittaAndTipo(String citta, TipoPostazione tipo){
+        if(citta == null || tipo == null){
+            throw new IllegalArgumentException("Città o tipo non validi");
+        }
+        return postazioneRepository.findByEdificio_CittaIgnoreCaseAndTipo(citta, tipo);
     }
 }

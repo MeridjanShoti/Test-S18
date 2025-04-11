@@ -19,6 +19,7 @@ public class Postazione {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String descrizione;
+    @Enumerated(EnumType.STRING)
     private TipoPostazione tipo;
     private int numeroMassimoOccupanti;
     @ManyToOne
@@ -26,4 +27,14 @@ public class Postazione {
     private Edificio edificio;
     @OneToMany (mappedBy = "postazione")
     private List<Prenotazione> prenotazione;
+    @Override
+    public String toString() {
+        return "Postazione{\n" +
+                "id=" + id +
+                ", \ndescrizione=" + descrizione  +
+                ", \ntipo=" + tipo +
+                ", \nnumeroMassimoOccupanti=" + numeroMassimoOccupanti +
+                ", \nedificio=" + edificio.getNome() +
+                '}';
+    }
 }

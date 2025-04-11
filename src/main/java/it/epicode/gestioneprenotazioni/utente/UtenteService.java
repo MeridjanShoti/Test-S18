@@ -19,4 +19,13 @@ public class UtenteService {
         }
         return utenteRepository.save(utente);
     }
+    public Utente findByUsername(String username){
+        if(username == null){
+            throw new IllegalArgumentException("Username non valido");
+        }
+        if(utenteRepository.findByUsername(username).isEmpty()){
+            throw new IllegalArgumentException("Utente non trovato");
+        }
+        return utenteRepository.findByUsername(username).get();
+    }
 }
