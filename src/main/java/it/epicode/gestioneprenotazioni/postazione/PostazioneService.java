@@ -24,4 +24,12 @@ public class PostazioneService {
         }
         return postazioneRepository.findByEdificio_CittaIgnoreCaseAndTipo(citta, tipo);
     }
+    public Postazione findById(Long id){
+        return postazioneRepository.findById(id).orElseThrow(()->new IllegalArgumentException("Postazione non trovata"));
+    }
+    public void printPostazioni(List<Postazione> postazioni){
+        for(Postazione postazione : postazioni){
+            System.out.println(postazione);
+        }
+    }
 }

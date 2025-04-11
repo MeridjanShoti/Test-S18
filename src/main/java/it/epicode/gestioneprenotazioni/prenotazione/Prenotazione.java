@@ -26,4 +26,12 @@ public class Prenotazione {
     @ManyToOne
     @JoinColumn(name = "postazione_id")
     private Postazione postazione;
+    @Override
+    public String toString() {
+        return "[id=" + id +
+                ", \ndataPrenotazione= " + dataPrenotazione +
+                ", \nutente= " + utente.getNomeCompleto() +
+                ", \npostazione= " + postazione.getId() +
+                "]";
+    }
 }

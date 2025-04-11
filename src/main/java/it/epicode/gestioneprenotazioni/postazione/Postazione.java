@@ -29,12 +29,11 @@ public class Postazione {
     private List<Prenotazione> prenotazione;
     @Override
     public String toString() {
-        return "Postazione{\n" +
-                "id=" + id +
-                ", \ndescrizione=" + descrizione  +
-                ", \ntipo=" + tipo +
-                ", \nnumeroMassimoOccupanti=" + numeroMassimoOccupanti +
-                ", \nedificio=" + edificio.getNome() +
-                '}';
+        return "[id= " + id +
+                ", \ndescrizione= " + descrizione  +
+                ", \ntipo= " + tipo +
+                ", \nnumeroMassimoOccupanti= " + numeroMassimoOccupanti +
+                ", \nedificio= " + edificio.getNome() +
+                "]";
     }
 }

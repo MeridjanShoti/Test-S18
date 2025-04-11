@@ -3,6 +3,8 @@ package it.epicode.gestioneprenotazioni.utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UtenteService {
     @Autowired
@@ -27,5 +29,13 @@ public class UtenteService {
             throw new IllegalArgumentException("Utente non trovato");
         }
         return utenteRepository.findByUsername(username).get();
+    }
+    public List<Utente> findAllUtenti(){
+        return utenteRepository.findAll();
+    }
+    public void printUtenti(List<Utente> utenti){
+        for(Utente utente : utenti){
+            System.out.println(utente);
+        }
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -32,6 +33,7 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
         String city;
         TipoPostazione type = null;
         Long idPrenotazione = null;
+        Long idPostazione = null;
         boolean continua = true;
         System.out.println("GestionePrenotazioniRunner partito");
         System.out.println("inserisci il tuo username");
@@ -44,6 +46,10 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
             System.out.println("2. Prenota postazione");
             System.out.println("3. Annulla prenotazione");
             System.out.println("4. Cambia Utente");
+            System.out.println("5. Lista prenotazioni");
+            System.out.println("6. Lista edifici");
+            System.out.println("7. Lista Utenti");
+            System.out.println("8. Lista postazioni");
             System.out.println("0. Esci");
             int choice = 50;
             try {
@@ -99,34 +105,52 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
                 case 2:
                     System.out.println("Inserisci la data della prenotazione");
                     date = scanner.nextLine();
-                    System.out.println("Inserisci la postazione da prenotare");
-                    try {
-                        idPrenotazione = scanner.nextLong();
-                    }
-                    catch (InputMismatchException e){
-                        log.error("Devi inserire un numero!");
-                    }
-                    finally {
-                        scanner.nextLine();
+                    if (!prenotazioneService.giornoGiaPrenotatoDaUtente(utente, LocalDate.parse(date))) {
+                        System.out.println("Inserisci la postazione da prenotare");
+                        try {
+                            idPostazione = scanner.nextLong();
+                            try {
+                                Postazione postazione = postazioneService.findById(idPostazione);
+                                if (prenotazioneService.giornoGiaPrenotatoDaPostazione(postazione, LocalDate.parse(date))) {
+                                    System.out.println("Postazione già prenotata");
+                                } else {
+                                    Prenotazione prenotazione = new Prenotazione();
+                                    prenotazione.setDataPrenotazione(LocalDate.parse(date));
+                                    prenotazione.setPostazione(postazione);
+                                    prenotazione.setUtente(utente);
+                                    prenotazioneService.createPrenotazione(prenotazione);
+                                    System.out.println("Prenotazione effettuata");
+                                }
+                            } catch (IllegalArgumentException e) {
+                                log.error(e.getMessage());
+                            }
+                        }
+                        catch (InputMismatchException e){
+                            log.error("Devi inserire un numero!");
+                        }
+                        finally {
+                            scanner.nextLine();
+                        }
+                    } else {
+                        System.out.println("Hai già prenotato una postazione in questa data");
                     }
                     break;
                 case 3:
                     System.out.println("Inserisci l'id della prenotazione da cancellare");
                     try {
                         idPrenotazione = scanner.nextLong();
+                        try {
+                            prenotazioneService.deleteById(idPrenotazione);
+                            System.out.println("Prenotazione cancellata");
+                        } catch (IllegalArgumentException e) {
+                            log.error(e.getMessage());
+                        }
                     }
                     catch (InputMismatchException e){
                         log.error("Devi inserire un numero!");
                     }
                     finally {
                         scanner.nextLine();
-                    }
-
-                    try {
-                        prenotazioneService.deleteById(idPrenotazione);
-                        System.out.println("Prenotazione cancellata");
-                    } catch (IllegalArgumentException e) {
-                        log.error(e.getMessage());
                     }
 
                     break;
@@ -135,6 +159,9 @@ public class GestionePrenotazioniRunner implements CommandLineRunner {
                     username = scanner.nextLine();
                     utente = utenteService.findByUsername(username);
                     break;
+                    case 5:
+                        System.out.println("Lista prenotazioni");
+                        prenotazioneService.printPrenotazioni(prenotazioneService.findAll());
                 case 0:
                     continua = false;
                     break;

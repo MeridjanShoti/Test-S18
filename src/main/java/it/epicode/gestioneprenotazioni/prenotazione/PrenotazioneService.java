@@ -3,9 +3,11 @@ package it.epicode.gestioneprenotazioni.prenotazione;
 import it.epicode.gestioneprenotazioni.edificio.EdificioService;
 import it.epicode.gestioneprenotazioni.postazione.Postazione;
 import it.epicode.gestioneprenotazioni.postazione.PostazioneService;
+import it.epicode.gestioneprenotazioni.utente.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,12 +23,6 @@ public class PrenotazioneService {
         if(prenotazione == null){
             throw new IllegalArgumentException("Prenotazione non valida");
         }
-
-       /*List<Prenotazione> prenotazioniPresentiByData = prenotazioneRepository.findByDataPrenotazione(prenotazione.getDataPrenotazione()).get();
-        List <Postazione> listaPostazioni = prenotazioniPresentiByData.stream().map(prenotazione1 -> prenotazione1.getPostazione()).toList();
-        List <Postazione> listaPostazioniTotali = postazioneService.findAllPostazioni();*/
-
-
         return prenotazioneRepository.save(prenotazione);
     }
     public Prenotazione findById(Long id){
@@ -39,5 +35,18 @@ public class PrenotazioneService {
             prenotazioneRepository.deleteById(id);
         }
     }
-
+    public boolean giornoGiaPrenotatoDaUtente(Utente utente, LocalDate data){
+        return prenotazioneRepository.existsByUtenteAndDataPrenotazione(utente, data);
+    }
+    public boolean giornoGiaPrenotatoDaPostazione(Postazione postazione, LocalDate data){
+        return prenotazioneRepository.existsByPostazioneAndDataPrenotazione(postazione, data);
+    }
+    public List<Prenotazione> findAll(){
+        return prenotazioneRepository.findAll();
+    }
+    public void printPrenotazioni(List<Prenotazione> prenotazioni){
+        for(Prenotazione prenotazione : prenotazioni){
+            System.out.println(prenotazione);
+        }
+    }
 }
